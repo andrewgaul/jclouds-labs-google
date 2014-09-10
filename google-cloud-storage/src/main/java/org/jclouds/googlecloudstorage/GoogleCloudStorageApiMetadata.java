@@ -20,6 +20,9 @@ import static org.jclouds.Constants.PROPERTY_SESSION_INTERVAL;
 import static org.jclouds.googlecloudstorage.reference.GoogleCloudStorageConstants.GCS_PROVIDER_NAME;
 import static org.jclouds.googlecloudstorage.reference.GoogleCloudStorageConstants.OPERATION_COMPLETE_INTERVAL;
 import static org.jclouds.googlecloudstorage.reference.GoogleCloudStorageConstants.OPERATION_COMPLETE_TIMEOUT;
+import static org.jclouds.location.reference.LocationConstants.ENDPOINT;
+import static org.jclouds.location.reference.LocationConstants.PROPERTY_REGION;
+import static org.jclouds.location.reference.LocationConstants.PROPERTY_REGIONS;
 import static org.jclouds.oauth.v2.config.OAuthProperties.AUDIENCE;
 import static org.jclouds.oauth.v2.config.OAuthProperties.SIGNATURE_OR_MAC_ALGORITHM;
 import static org.jclouds.reflect.Reflection2.typeToken;
@@ -55,6 +58,11 @@ public class GoogleCloudStorageApiMetadata extends BaseHttpApiMetadata<GoogleClo
 
    public static Properties defaultProperties() {
       Properties properties = BaseHttpApiMetadata.defaultProperties();
+      properties.setProperty(PROPERTY_REGIONS, "ASIA,EU,US");
+      // taken from: https://developers.google.com/storage/docs/concepts-techniques#specifyinglocations
+      properties.setProperty(PROPERTY_REGION + "." + "ASIA" + "." + ENDPOINT, "https://ch-asia.storage.googleapis.com");
+      properties.setProperty(PROPERTY_REGION + "." + "EU" + "." + ENDPOINT, "https://ch-eu.storage.googleapis.com)");
+      properties.setProperty(PROPERTY_REGION + "." + "US" + "." + ENDPOINT, "https://ch-us.storage.googleapis.com)");
       properties.put("oauth.endpoint", "https://accounts.google.com/o/oauth2/token");
       properties.put(AUDIENCE, "https://accounts.google.com/o/oauth2/token");
       properties.put(SIGNATURE_OR_MAC_ALGORITHM, "RS256");
